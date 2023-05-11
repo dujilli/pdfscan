@@ -1,24 +1,22 @@
-import tkinter as tk
+
 import customtkinter as ctk
 from tkinter import *
 import fpdf
-from customtkinter import CTkButton
 from tkPDFViewer import tkPDFViewer as pdf
 from tkinter import filedialog
-import pypdf
+
 from pypdf import PdfReader
-from pypdf import PdfWriter
-from fpdf import FPDF
+
 import shutil
-import sys
-import PIL
+
 from PIL import ImageTk
+
 
 # pip install tk, customtkinter, fpdf, pypdf, tkPDFViewer
 
 root = ctk.CTk()
 root.geometry("500x500")
-root.title("Adowasp PDF Scraper")
+root.title("PyScraper")
 ctk.set_appearance_mode('dark')
 ctk.set_default_color_theme("green")
 root.wm_iconbitmap()
@@ -39,39 +37,41 @@ def open_file_explorer():
     if file_path:
         if p2:
             p2.destroy()
+
     p1 = pdf.ShowPdf()
     p2 = p1.pdf_view(frame, pdf_location=open(file_path), width=150, height=150)
-    p2.pack(expand=True, fill='both', pady=20, padx=20)
+    p2.pack(expand=True, fill='both', pady=10, padx=10)
 
     # text extractor
 
     reader = PdfReader(file_path)
     text2 = ""
+    total_words = 0
+    page_count = 0
 
     for page in reader.pages:
         text2 += page.extract_text() + "\n\n"
+        total_words += len(text2)
+        page_count += 1
 
-        page2 = len(page)
-        len2 = len(text2)
+    frame3 = ctk.CTkFrame(frame2)
+    frame3.pack(pady=5, padx=10, fill='both', expand=True)
 
-        frame3 = ctk.CTkFrame(frame2)
-        frame3.pack(pady=10, padx=10, fill='both', expand=True)
+    label2 = ctk.CTkLabel(frame3, text=f'Letter count: {total_words}', font=('Roboto', 10),
+                          corner_radius=10,
+                          text_color='white')
 
-        label2 = ctk.CTkLabel(frame3, text=f'Letter count: {str(len2)}', font=('Roboto', 10),
-                              corner_radius=10,
-                              text_color='white')
+    label3 = ctk.CTkLabel(frame3, text=f'Page count: {page_count} ', font=('Roboto', 10),
+                          corner_radius=10,
+                          text_color='white')
 
-        label3 = ctk.CTkLabel(frame3, text=f'Page count: {str(page2)}', font=('Roboto', 10),
-                              corner_radius=10,
-                              text_color='white')
+    label4 = ctk.CTkLabel(frame3, text=f'File path: {file_path}', font=('Roboto', 10),
+                          corner_radius=10,
+                          text_color='white')
 
-        label4 = ctk.CTkLabel(frame2, text=f'{file_path}', font=('Roboto', 10),
-                              corner_radius=10,
-                              text_color='white')
-
-        label2.pack(side=LEFT, padx=5, pady=5)
-        label3.pack(side=RIGHT, padx=5, pady=5)
-        label4.pack(padx=5,pady=5)
+    label2.pack(side=LEFT, pady=5, padx=5)
+    label3.pack(side=RIGHT, padx=5)
+    label4.pack(side=TOP, pady=5)
 
     # text builder
     pdf1 = fpdf.FPDF(format='letter')
@@ -101,11 +101,9 @@ frame.pack(pady=10, padx=10, fill='both', expand=True)
 frame2 = ctk.CTkFrame(master=frame)
 frame2.pack(pady=10, padx=10, fill='both', expand=True)
 
-label = ctk.CTkLabel(frame2, text="AdoBee PDF SCRAPER", font=('Lemon Milk', 30),
+label = ctk.CTkLabel(frame2, text="PyDFScraper", font=('Lemon Milk', 30),
                      corner_radius=10,
-                     text_color='white',
-
-                     )
+                     text_color='white',)
 
 button = ctk.CTkButton(frame2, text="SELECT PDF FILE",
                        font=('Roboto', 11),
@@ -121,7 +119,7 @@ button2 = ctk.CTkButton(frame2, text="DOWNLOAD SCRAPED PDF",
                         command=download)
 
 label.pack(pady=8, padx=10)
-button.pack(padx=8)
-button2.pack(pady=15, padx=10)
+button.pack(side=TOP, padx=8)
+button2.pack(side=TOP,pady=10, padx=10)
 
 root.mainloop()
