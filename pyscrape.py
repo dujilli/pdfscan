@@ -57,15 +57,15 @@ def open_file_explorer():
     frame3 = ctk.CTkFrame(frame2)
     frame3.pack(pady=5, padx=10, fill='both', expand=True)
 
-    label2 = ctk.CTkLabel(frame3, text=f'Letter count: {total_words}', font=('Roboto', 10),
+    label2 = ctk.CTkLabel(frame3, text=f'Letter count: {total_words}', font=('Roboto', 11),
                           corner_radius=10,
                           text_color='white')
 
-    label3 = ctk.CTkLabel(frame3, text=f'Page count: {page_count} ', font=('Roboto', 10),
+    label3 = ctk.CTkLabel(frame3, text=f'Page count: {page_count} ', font=('Roboto', 11),
                           corner_radius=10,
                           text_color='white')
 
-    label4 = ctk.CTkLabel(frame3, text=f'File path: {file_path}', font=('Roboto', 10),
+    label4 = ctk.CTkLabel(frame3, text=f'File path: {file_path}', font=('Roboto', 11),
                           corner_radius=10,
                           text_color='white')
 
