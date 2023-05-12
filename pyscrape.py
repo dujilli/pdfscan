@@ -108,6 +108,10 @@ label = ctk.CTkLabel(frame2, text="PyDFScraper", font=('Lemon Milk', 30),
                      corner_radius=10,
                      text_color='white')
 
+label2 = ctk.CTkLabel(frame2, text="Select a PDF to scrape it's text.", font=('Roboto', 10),
+                     corner_radius=10,
+                     text_color='white')
+
 button = ctk.CTkButton(frame2, text="SELECT PDF FILE",
                        font=('Roboto', 11),
                        text_color='black',
@@ -115,7 +119,8 @@ button = ctk.CTkButton(frame2, text="SELECT PDF FILE",
                        corner_radius=5,
                        command=open_file_explorer)
 
-label.pack(pady=8, padx=10)
+label.pack()
+label2.pack(padx=10)
 button.pack(side=TOP, padx=8)
 
 
