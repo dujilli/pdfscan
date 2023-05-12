@@ -1,25 +1,18 @@
-
 import customtkinter as ctk
 from tkinter import *
 import fpdf
 from tkPDFViewer import tkPDFViewer as pdf
 from tkinter import filedialog
-
 from pypdf import PdfReader
-
 import shutil
-
 from PIL import ImageTk
 
-
-# pip install tk, customtkinter, fpdf, pypdf, tkPDFViewer
-
 root = ctk.CTk()
-root.geometry("500x500")
-root.title("PyScraper")
+geo = root.geometry("800x500")
+root.title("PyDFScraper")
 ctk.set_appearance_mode('dark')
 ctk.set_default_color_theme("green")
-root.wm_iconbitmap()
+root.iconbitmap("thumbs.png")
 icopath = ImageTk.PhotoImage(file="thumbs.png")
 root.iconphoto(False, icopath)
 
@@ -40,7 +33,7 @@ def open_file_explorer():
 
     p1 = pdf.ShowPdf()
     p2 = p1.pdf_view(frame, pdf_location=open(file_path), width=150, height=150)
-    p2.pack(expand=True, fill='both', pady=10, padx=10)
+    p2.pack(expand=True, fill='both', pady=10, padx=18)
 
     # text extractor
 
@@ -51,8 +44,17 @@ def open_file_explorer():
 
     for page in reader.pages:
         text2 += page.extract_text() + "\n\n"
-        total_words += len(text2)
+        total_words += len(text2.replace(" ", ""))
         page_count += 1
+
+    button2 = ctk.CTkButton(frame2, text="DOWNLOAD SCRAPED PDF",
+                            font=('Roboto', 11),
+                            text_color='black',
+                            hover_color='grey',
+                            corner_radius=5,
+                            command=download)
+
+    button2.pack(side=TOP, pady=10, padx=10)
 
     frame3 = ctk.CTkFrame(frame2)
     frame3.pack(pady=5, padx=10, fill='both', expand=True)
@@ -68,6 +70,7 @@ def open_file_explorer():
     label4 = ctk.CTkLabel(frame3, text=f'File path: {file_path}', font=('Roboto', 11),
                           corner_radius=10,
                           text_color='white')
+
 
     label2.pack(side=LEFT, pady=5, padx=5)
     label3.pack(side=RIGHT, padx=5)
@@ -103,7 +106,7 @@ frame2.pack(pady=10, padx=10, fill='both', expand=True)
 
 label = ctk.CTkLabel(frame2, text="PyDFScraper", font=('Lemon Milk', 30),
                      corner_radius=10,
-                     text_color='white',)
+                     text_color='white')
 
 button = ctk.CTkButton(frame2, text="SELECT PDF FILE",
                        font=('Roboto', 11),
@@ -111,15 +114,10 @@ button = ctk.CTkButton(frame2, text="SELECT PDF FILE",
                        hover_color='grey',
                        corner_radius=5,
                        command=open_file_explorer)
-button2 = ctk.CTkButton(frame2, text="DOWNLOAD SCRAPED PDF",
-                        font=('Roboto', 11),
-                        text_color='black',
-                        hover_color='grey',
-                        corner_radius=5,
-                        command=download)
 
 label.pack(pady=8, padx=10)
 button.pack(side=TOP, padx=8)
-button2.pack(side=TOP,pady=10, padx=10)
+
+
 
 root.mainloop()
